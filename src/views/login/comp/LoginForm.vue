@@ -1,7 +1,7 @@
 <template>
   <el-form :model="ruleForm" :rules="rules" ref="validateForm" class="login-ruleForm">
-    <el-form-item prop="username">
-      <el-input :placeholder="t('login.username')" v-model="ruleForm.username">
+    <el-form-item prop="name">
+      <el-input :placeholder="t('login.username')" v-model.trim="ruleForm.name">
         <template #prefix>
           <icon-user theme="outline" size="16" fill="#999" />
         </template>
@@ -11,7 +11,8 @@
       <el-input
         :placeholder="t('login.password')"
         type="password"
-        v-model="ruleForm.password"
+        v-model.trim="ruleForm.password"
+        show-password
       >
         <template #prefix>
           <icon-lock theme="outline" size="16" fill="#999" />
@@ -21,7 +22,7 @@
     <el-form-item prop="captcha">
       <el-input
             type="text"
-            v-model="ruleForm.captcha"
+            v-model.trim="ruleForm.captcha"
             autocomplete="off"
             :placeholder="t('login.captcha')"
             @keyup.enter="handleLogin"
@@ -68,7 +69,7 @@
       const validateForm = ref(null);
       const state = reactive({
         ruleForm: {
-          username: '',
+          name: '',
           password: '',
         },
         loading: false,
@@ -76,7 +77,7 @@
         captcha_img:"",
         code_id:"",
         rules: {
-          username: [{ required: true, message: t('login.rules.username'), trigger: 'blur' }],
+          name: [{ required: true, message: t('login.rules.username'), trigger: 'blur' }],
           password: [{ required: true, message: t('login.rules.password'), trigger: 'blur' }],
           captcha: [{ required: true, message: t('login.rules.captcha'), trigger: 'blur' }]
         },
@@ -117,15 +118,23 @@
               "code_id":state.code_id,
               "form":state.ruleForm
             })
-              .then(() => {
-                const routerPath =
+              .then((res) => {
+                // 存储用户登录信息
+                if (res.code==307){
+                  router.push('/superuser')
+                  return
+                }else{
+                   sessionStorage.clear();
+                  localStorage.clear();
+                  localStorage.token = res.accessToken;
+                  localStorage.username = res.username;
+                  // localStorage.email = res.email;
                   state.redirect === '/404' || state.redirect === '/401' ? '/' : state.redirect;
-                console.log(routerPath,1111)
-                router.push('/').catch((err) => {console.log('router err', err)});
-                state.loading = false;
+                  router.push('/').catch((err) => {console.log('router err', err)});
+                  state.loading = false;
+                }
               })
-              .catch((res) => {
-                console.log(res,1211)
+              .catch(() => {
                 state.loading = false;
               });
           }
@@ -135,7 +144,8 @@
          store
         .dispatch('user/captcha')
         .then((res) => {
-          state.captcha_img = "/api/user/get_captcha?code_id=" + res
+          state.code_id=res
+          state.captcha_img = "/api/user/get_captcha?code_id=" + state.code_id
         })
         .catch((err) => {
           state.loading = false;

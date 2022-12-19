@@ -4,8 +4,8 @@
     class="logo-wrapper"
     :class="{ unfold: collapse, horizontal: mode === 'horizontal' }"
   >
-    <svg-icon name="vue" size="35px" />
-    <span class="logo-title" :style="{ color: textColor }" v-if="!collapse"> vue3-admin </span>
+    <img src="@/assets/imgs/coinbase2.png" width="35" height="35">
+    <span class="logo-title" :style="{ color: textColor }" v-if="!collapse"> CoinBase </span>
   </div>
 </template>
 

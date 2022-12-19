@@ -46,6 +46,12 @@ export const asyncRoutes = [
       },
     ],
   },
+  {
+    path: '/superuser',
+    name: 'Superuser',
+    component: () => import('@/views/users/createsuperuser.vue'),
+    hidden: true,
+  },
   // {
   //   path: '/comp',
   //   component: Layout,

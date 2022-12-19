@@ -29,6 +29,9 @@ export default {
     unfold: '展开',
     size: '布局大小',
     profile: '个人中心',
+    editPwd:"修改密码",
+    pwd:"请输入要修改的密码",
+    pwd_agin:"请再次输入密码"
   },
   login: {
     title: '登录',
@@ -37,6 +40,7 @@ export default {
       password: '请输入密码',
       captcha: '请输入验证码'
     },
+    captcha: '请输入验证码',
     loginBtn: '登录',
     desc: 'CoinBase订单管理系统',
     tip: '点击登录订单管理系统',
@@ -56,6 +60,7 @@ export default {
       mobileFormat:"手机号码格式不正确",
       role:'请选择职位',
     },
+    delete:"请确认是否要删除该用户信息，删除后不可恢复！"
 
     // rememberPwd: '记住密码',
     // forgotPwd: '忘记密码',

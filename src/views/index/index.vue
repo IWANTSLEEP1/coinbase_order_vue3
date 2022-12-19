@@ -5,10 +5,9 @@
         <el-avatar :size="50" :src="avatar"></el-avatar>
       </div>
       <div class="head-card-content">
-        <h2 class="title">{{ sayHi }}! Vue3-Admin, {{ t('indexPage.descTitle') }}</h2>
+        <h2 class="title">{{ sayHi }}!   {{userName}},  {{ t('indexPage.descTitle') }}</h2>
         <p class="desc">
-          vue3-admin 是基于 vue3 + vite2 + Element-Plus + Vue-Router4.x + Vuex4.x +
-          Javascript开发的中后台管理平台，开箱即用！赶快试试吧...
+          巴拉巴拉巴拉巴拉巴拉呜呜呜呜呜呜呜呜无无无无无无无无无无无无无
         </p>
       </div>
     </div>
@@ -117,9 +116,9 @@
 
   import { useStore } from 'vuex';
   const store = useStore();
-
   const { t } = useI18n();
-
+  const user = localStorage.username
+  const userName = ref(user);
   const state = reactive({
     list: [],
     prefix: '',

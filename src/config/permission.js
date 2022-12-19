@@ -24,7 +24,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (true) {
     if (to.path === '/login') {
-      next({ path: '/' });
+      next();
       if (progressBar) NProgress.done();
     } else {
       const hasPermissions =

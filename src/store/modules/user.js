@@ -1,4 +1,4 @@
-import { getUserInfo, login, captcha, getAllUsers, getAllRoles, addUser,getUser,editUser} from '@/api/user';
+import { getUserInfo, login, captcha, getAllUsers, getAllRoles, addUser,getUser,editUser,deleteUser,addSuperUser} from '@/api/user';
 import { getAccessToken, removeAccessToken, setAccessToken } from '@/utils/accessToken';
 
 import { setting } from '@/config/setting';
@@ -44,29 +44,29 @@ const actions = {
   },
   async login({ commit },form) {
     const data = await login(form);
-    console.log(data,1111)
-    // const accessToken = data[tokenName];
-    // if (accessToken) {
-    //   commit('setAccessToken', accessToken);
-    //   const hour = new Date().getHours();
-    //   const thisTime =
-    //     hour < 8
-    //       ? global.t('sayHi.early')
-    //       : hour <= 11
-    //       ? global.t('sayHi.morning')
-    //       : hour <= 13s
-    //       ? global.t('sayHi.noon')
-    //       : hour < 18
-    //       ? global.t('sayHi.afternoon')
-    //       : global.t('sayHi.evening');
-    //   ElNotification({
-    //     title: `${thisTime}！`,
-    //     message: `${global.t('notice.msg')}${title}!`,
-    //     type: 'success',
-    //   });
-    // } else {
-    //   ElMessage.error(`登录接口异常，未正确返回${tokenName}...`);
-    // }
+    return data
+    const accessToken = data[tokenName];
+    if (accessToken) {
+      commit('setAccessToken', accessToken);
+      const hour = new Date().getHours();
+      const thisTime =
+        hour < 8
+          ? global.t('sayHi.early')
+          : hour <= 11
+          ? global.t('sayHi.morning')
+          : hour <= 13
+          ? global.t('sayHi.noon')
+          : hour < 18
+          ? global.t('sayHi.afternoon')
+          : global.t('sayHi.evening');
+      ElNotification({
+        title: `${thisTime}！`,
+        message: `${global.t('notice.msg')}${title}!`,
+        type: 'success',
+      });
+    } else {
+      ElMessage.error(`登录接口异常，未正确返回${tokenName}...`);
+    }
   },
   async getUserInfo({ commit, state }) {
     const { data } = await getUserInfo(state.accessToken);
@@ -87,7 +87,9 @@ const actions = {
   },
   async logout({ dispatch }) {
     // await logout(state.accessToken);
-    return await dispatch('resetAccessToken');
+    // return await dispatch('resetAccessToken');
+    sessionStorage.clear();
+    localStorage.clear();
   },
   async captcha({ dispatch }) {
     const data = await captcha()
@@ -115,6 +117,14 @@ const actions = {
   },
   async editUser({ dispatch },data) {
     const res = await editUser(data)
+    return res
+  },
+  async deleteUser({ dispatch },email) {
+    const res = await deleteUser(email)
+    return res
+  },
+  async createSuperUser({ dispatch },pwd) {
+    const res = await addSuperUser(pwd)
     return res
   },
   resetAccessToken({ commit }) {

@@ -10,11 +10,31 @@
     </span>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item command="github">Github</el-dropdown-item>
+        <el-dropdown-item command="editpwd">{{ t('navbar.editPwd') }}</el-dropdown-item>
         <el-dropdown-item command="logout" divided>{{ t('navbar.logOut') }}</el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
+
+   <el-dialog v-model="dialogFormVisible" :title="t('navbar.editPwd')"  width="20%" center @close="dialogClose">
+    <el-form :model="ruleForm" :rules="rules" ref="validateForm">
+      <el-form-item label="Password1" :label-width="formLabelWidth" prop="password">
+        <el-input v-model.trim="ruleForm.password1" autocomplete="off" :placeholder="t('navbar.pwd')" />
+      </el-form-item>
+       <el-form-item label="Password2" :label-width="formLabelWidth" prop="password">
+        <el-input v-model.trim="ruleForm.password2" autocomplete="off" :placeholder="t('navbar.pwd_agin')" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="summit">
+          Confirm
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
+
 </template>
 
 <script>
@@ -24,7 +44,7 @@
 </script>
 
 <script setup>
-  import { ref } from 'vue';
+  import { ref ,reactive,toRefs} from 'vue';
   import { useStore } from 'vuex';
   import { ElMessageBox } from 'element-plus';
   import { setting } from '@/config/setting';
@@ -33,10 +53,22 @@
 
   const { title, recordRoute } = setting;
   const { t } = useI18n();
+  const user = localStorage.username
   const avatar = ref('https://i.gtimg.cn/club/item/face/img/2/15922_100.gif');
-  const userName = ref('hu-snail');
+  const userName = ref(user);
   const store = useStore();
   const router = useRouter();
+  const state = reactive({
+       dialogFormVisible:false,
+       ruleForm: {
+         password1:"",
+         password2:"",
+       },
+  })
+  
+  if(user==undefined){
+       router.push('/login');
+    }
 
   defineProps({
     color: {
@@ -50,8 +82,8 @@
       case 'logout':
         handleLogout();
         break;
-      case 'github':
-        window.open('https://github.com/hu-snail/vue3-admin-element-template');
+      case 'editpwd':
+         handleEditPwd();;
         break;
       default:
         break;
@@ -67,15 +99,27 @@
     })
       .then(async () => {
         await store.dispatch('user/logout');
-        if (recordRoute) {
-          const { fullPath } = router.currentRoute._value;
-          location.replace('/login');
-        } else {
-          router.push('/login');
-        }
+         router.push('/login');
+        // if (recordRoute) {
+        //   const { fullPath } = router.currentRoute._value;
+        //   location.replace('/login');
+        // } else {
+        //   router.push('/login');
+        // }
       })
       .catch(() => {});
   };
+
+  const handleEditPwd = () => {
+    state.dialogFormVisible=true
+    console.log(state.dialogFormVisible)
+ };
+
+  const dialogClose = () => {
+    state.dialogFormVisible=false
+    state.validateForm.resetFields()
+  }
+
 </script>
 
 <style lang="scss" scoped>
