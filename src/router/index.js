@@ -1,7 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Layout from '@/layouts/index.vue';
-// import i18n from '@/locales';
-// const { global } = i18n;
 export const constantRoutes = [
   {
     path: '/login',
@@ -24,6 +22,12 @@ export const constantRoutes = [
     component: () => import('@/views/errorPage/404.vue'),
     hidden: true,
   },
+  {
+    path: '/superuser',
+    name: 'Superuser',
+    component: () => import('@/views/users/createsuperuser.vue'),
+    hidden: true,
+  },
 ];
 
 export const asyncRoutes = [
@@ -36,7 +40,7 @@ export const asyncRoutes = [
       {
         path: '/index',
         name: 'Index',
-        component: () => import('@/views/index/index.vue'),
+        component: () => import('../views/index/index.vue'),
         meta: {
           title: "首页",
           icon: 'icon-home',
@@ -45,12 +49,6 @@ export const asyncRoutes = [
         },
       },
     ],
-  },
-  {
-    path: '/superuser',
-    name: 'Superuser',
-    component: () => import('@/views/users/createsuperuser.vue'),
-    hidden: true,
   },
   
   {

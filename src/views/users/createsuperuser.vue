@@ -42,7 +42,7 @@
         captcha_img:"",
         code_id:"",
         rules: {
-          password: [{ required: true, message: t('login.rules.password'), trigger: 'blur' }],
+          password: [{ required: true, message: "请输入密码", trigger: 'blur' }],
         },
       });
 

@@ -8,7 +8,6 @@ import { svgBuilder } from './src/plugin/svgBuilder';
 
 import OptimizationPersist from 'vite-plugin-optimize-persist';
 import PkgConfig from 'vite-plugin-package-config';
-// import vueI18n from '@intlify/vite-plugin-vue-i18n';
 
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
