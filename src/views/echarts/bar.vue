@@ -51,11 +51,9 @@
   import Descrition from '@/components/Descrition/index.vue';
   import Echarts from '@/components/Echarts/index.vue';
 
-  import { useI18n } from 'vue-i18n';
   export default {
     components: { Descrition, Echarts },
     setup() {
-      const { t } = useI18n();
 
       const state = reactive({
         xAxis: {
@@ -141,7 +139,6 @@
 
       return {
         ...toRefs(state),
-        t,
       };
     },
   };

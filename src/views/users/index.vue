@@ -1,19 +1,21 @@
 <template>
-  <el-button type="primary" @click="addUser">Add User</el-button>
+  <el-button type="primary" @click="addUser" :icon="Plus">Add User</el-button>
   <el-table
     :data="tableData"
-    style="width: 100%; margin-top: 5px"
+    style="width: 100%; margin-top: 5px;"
     :loading="loading"
-    :stripe="true"
+    stripe
+    border
+    header-align="center"
   >
-    <el-table-column prop="name" label="Name" />
-    <el-table-column prop="mobile" label="Mobile" />
-    <el-table-column prop="email" label="Email" />
-    <el-table-column prop="role" label="Role" />
-    <el-table-column label="Operations">
+    <el-table-column prop="name" label="Name" align="center"/>
+    <el-table-column prop="mobile" label="Mobile" align="center" />
+    <el-table-column prop="email" label="Email"  align="center"/>
+    <el-table-column prop="role" label="Role"  align="center"/>
+    <el-table-column label="Operations" align="center">
       <template #default="scope">
-        <el-button type="primary" @click="handleEdit(scope.row.email)">Edit</el-button>
-        <el-button type="danger" @click="handleDelete(scope.row.email)">Delete</el-button>
+        <el-button type="primary" @click="handleEdit(scope.row.email)" :icon="Edit">Edit</el-button>
+        <el-button type="danger" @click="handleDelete(scope.row.email)" :icon="Delete">Delete</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -30,21 +32,24 @@
         <el-input
           v-model.trim="ruleForm.name"
           autocomplete="off"
-          :placeholder="t('user.rules.username')"
+          :placeholder="请输入用户名"
         />
       </el-form-item>
-      <el-form-item label="Password" :label-width="formLabelWidth" prop="password">
+
+      <el-form-item label="Password" :label-width="formLabelWidth" prop="password" v-if="isAdd">
         <el-input
           v-model.trim="ruleForm.password"
           autocomplete="off"
-          :placeholder="t('user.rules.password')"
+          :placeholder="请输入密码"
+          type="password"
+          show-password
         />
       </el-form-item>
       <el-form-item label="Email" :label-width="formLabelWidth" prop="email">
         <el-input
           v-model.trim="ruleForm.email"
           autocomplete="off"
-          :placeholder="t('user.rules.email')"
+          :placeholder="请输入邮箱"
           :disabled="isAdd ? false : true"
         />
       </el-form-item>
@@ -52,7 +57,7 @@
         <el-input
           v-model.trim="ruleForm.mobile"
           autocomplete="off"
-          :placeholder="t('user.rules.mobile')"
+          :placeholder="请输入手机号码"
         />
       </el-form-item>
       <el-form-item label="Is Robot" :label-width="formLabelWidth">
@@ -71,10 +76,10 @@
         <el-select
           v-model="ruleForm.role"
           class="m-2"
-          :placeholder="t('user.rules.role')"
+          :placeholder="请选择角色名称"
           clearable
         >
-          <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id" />
+          <el-option v-for="item in roles" :key="item.name" :label="item.name" :value="item.name" />
         </el-select>
       </el-form-item>
     </el-form>
@@ -88,14 +93,12 @@
 </template>
 
 <script>
-// import {Plus,Delete,Edit} from '@element-plus/icons-vue'
+import {Plus,Delete,Edit} from '@element-plus/icons-vue'
 import { reactive, toRefs, ref, unref } from 'vue';
 import { useStore } from 'vuex';
-import { useI18n } from 'vue-i18n';
 import { ElMessage, ElMessageBox } from 'element-plus';
 export default {
   setup() {
-    const { t } = useI18n();
     const store = useStore();
     const validateForm = ref(null);
     const formLabelWidth = '140px';
@@ -117,20 +120,18 @@ export default {
       validateForm,
       roles: [],
       rules: {
-        name: [{ required: true, message: t('user.rules.username'), trigger: 'blur' }],
-        password: [{ required: true, message: t('user.rules.password'), trigger: 'blur' }],
+        name: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         email: [
-          { required: true, message: t('user.rules.email'), trigger: 'blur' },
+          { required: true, message: '请输入邮箱', trigger: 'blur' },
           {
             pattern:
               /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
-            message: t('user.rules.emailFormat'),
-            trigger: 'blur',
+            message: '邮箱格式不正确',trigger: 'blur',
           },
         ],
         mobile: [
-          { required: true, message: t('user.rules.mobile'), trigger: 'blur' },
-          { pattern: /^1[345789]\d{9}$/, message: t('user.rules.mobileFormat'), trigger: 'blur' },
+          { pattern: /^1[345789]\d{9}$/, message: '手机号码格式不正确', trigger: 'blur'},
         ],
       },
     });
@@ -160,7 +161,7 @@ export default {
       store
         .dispatch('user/getUser', email)
         .then((res) => {
-          state.ruleForm = res['data'];
+          state.ruleForm = res['data'][0];
         })
         .catch((err) => {
           console.log(err);
@@ -179,9 +180,16 @@ export default {
         if (valid) {
           if (state.isAdd) {
             // 添加
-            console.log(state.ruleForm.name, state.ruleForm.password, state.ruleForm.email);
             store
-              .dispatch('user/addUser', state.ruleForm)
+              .dispatch('user/addUser', {
+                name: state.ruleForm.name,
+                password: state.ruleForm.password,
+                mobile: state.ruleForm.mobile,
+                email: state.ruleForm.email,
+                is_robot: state.ruleForm.is_robot,
+                is_superuser: state.ruleForm.is_superuser,
+                role: state.ruleForm.role,
+              })
               .then((res) => {
                 state.dialogFormVisible = false;
                 ElMessage({
@@ -198,10 +206,9 @@ export default {
             store
               .dispatch('user/editUser', {
                 name: state.ruleForm.name,
-                password: state.ruleForm.password,
                 mobile: state.ruleForm.mobile,
-                email: state.ruleForm.email,
                 is_robot: state.ruleForm.is_robot,
+                email: state.ruleForm.email,
                 role: state.ruleForm.role,
               })
               .then((res) => {
@@ -228,7 +235,7 @@ export default {
     };
 
     const handleDelete = (email) => {
-      ElMessageBox.confirm(t('user.delete'), 'Warning', {
+      ElMessageBox.confirm("请确认是否要删除该用户信息，删除后不可恢复", 'Warning', {
         confirmButtonText: 'OK',
         cancelButtonText: 'Cancel',
         type: 'warning',
@@ -266,10 +273,12 @@ export default {
       formLabelWidth,
       summit,
       addUser,
-      t,
       handleEdit,
       handleDelete,
       dialogClose,
+      Edit,
+      Plus,
+      Delete
     };
   },
 };

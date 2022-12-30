@@ -1,6 +1,6 @@
 <template>
   <el-drawer
-    :title="t('settings.title')"
+    :title="主题设置"
     v-model="settings.isDrawerSetting"
     :direction="direction"
     :before-close="handleClose"
@@ -11,7 +11,7 @@
       <el-scrollbar height="85vh">
         <div class="form">
           <el-form label-width="100px" label-position="left">
-            <el-form-item :label="t('settings.layout')">
+            <el-form-item :label="布局">
               <el-select
                 class="theme-select-width"
                 v-model="settings.mode"
@@ -28,7 +28,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <!-- <el-form-item :label="t('settings.theme')">
+            <!-- <el-form-item :label="主题">
               <el-select
                 class="theme-select-width"
                 v-model="settings.theme"
@@ -48,26 +48,26 @@
             <el-form-item label="Logo">
               <el-switch v-model="settings.isLogo" />
             </el-form-item>
-            <el-form-item :label="t('settings.tag')">
+            <el-form-item :label="标签">
               <el-switch @change="handleChangeTag" v-model="setting.tag" />
             </el-form-item>
-            <el-form-item :label="t('settings.breadcurmb')">
+            <el-form-item :label="面包导航">
               <el-switch
                 :disabled="settings.mode === 'horizontal'"
                 @change="handleChangeBread"
                 v-model="setting.isBreadcrumb"
               />
             </el-form-item>
-            <el-form-item :label="t('settings.fixed')">
+            <el-form-item :label="固定头部">
               <el-switch :disabled="isMobile" v-model="settings.fixedHead" />
             </el-form-item>
-            <el-form-item :label="t('settings.fullscreen')">
+            <el-form-item :label="全屏">
               <el-switch v-model="settings.fullScreen" />
             </el-form-item>
-            <el-form-item :label="t('settings.refresh')">
+            <el-form-item :label="刷新">
               <el-switch v-model="settings.refresh" />
             </el-form-item>
-            <el-form-item :label="t('settings.notice')">
+            <el-form-item :label="通知">
               <el-switch v-model="settings.notice" />
             </el-form-item>
           </el-form>
@@ -76,10 +76,8 @@
     </div>
     <template #footer>
       <div class="drawer-footer">
-        <el-button size="small">{{ t('settings.defaultBtn') }}</el-button>
-        <el-button type="primary" size="small" @click="handleToSave">{{
-          t('settings.saveBtn')
-        }}</el-button>
+        <el-button size="small">恢复默认</el-button>
+        <el-button type="primary" size="small" @click="handleToSave">保存</el-button>
       </div>
     </template>
   </el-drawer>
@@ -94,9 +92,7 @@
 <script setup>
   import { ref, reactive, computed, watch } from 'vue';
   import { useStore } from 'vuex';
-  import { useI18n } from 'vue-i18n';
   import { themeConfig } from '@/config/theme';
-  const { t } = useI18n();
 
   const { themeOptions } = themeConfig;
 
@@ -115,37 +111,37 @@
     modeOption: [
       {
         value: 'vertical',
-        label: t('layout.vertical'),
+        label: '纵向',
       },
       {
         value: 'horizontal',
-        label: t('layout.horizontal'),
+        label: '横向',
       },
     ],
     colorOptions: [
       {
         value: 'theme1',
-        label: t('theme.options.theme1'),
+        label: '蓝白',
       },
       {
         value: 'theme2',
-        label: t('theme.options.theme2'),
+        label: '蓝黑',
       },
       {
         value: 'theme3',
-        label: t('theme.options.theme3'),
+        label: '绿白',
       },
       {
         value: 'theme4',
-        label: t('theme.options.theme4'),
+        label: '绿黑',
       },
       {
         value: 'theme5',
-        label: t('theme.options.theme5'),
+        label: '红白',
       },
       {
         value: 'theme6',
-        label: t('theme.options.theme6'),
+        label:'红黑',
       },
     ],
   });

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { netConfig } from '@/config/net.config';
-const { baseURL, contentType, invalidCode, noPermissionCode, requestTimeout, successCode } =
+const { baseURL, contentType, invalidCode,notFound, noPermissionCode, requestTimeout, successCode } =
   netConfig;
 import store from '@/store/index.js';
 import router from '@/router/index.js';
@@ -21,41 +21,33 @@ let tokenLose = true;
 const handleCode = (code, msg) => {
   switch (code) {
     case invalidCode:
-      tokenLose = false;
-      ElMessageBox.confirm('您已掉线，或者访问权限出错，请重新登录！', '重新登录', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-      })
-        .then(async () => {
-          // 处理重新登录逻辑
-        })
-        .catch(() => {
-          tokenLose = true;
-        });
+      router.push({ path: '/login' }).catch(() => {});
       break;
     case noPermissionCode:
       router.push({ path: '/401' }).catch(() => {});
       break;
+    case notFound:
+      router.push({ path: '/404' }).catch(() => {});
+      break;
     default:
-      console.log('---');
       ElMessage.error(msg.detail || `后端接口${code}异常`);
       break;
   }
 };
-
 const instance = axios.create({
   baseURL,
   timeout: requestTimeout,
   headers: {
     'Content-Type': contentType,
+    "Authorization":"Bearer "+localStorage.token
   },
 });
 
 instance.interceptors.request.use(
+  console.log(localStorage.token),
   (config) => {
     if (store.getters['user/accessToken']) {
-      config.headers[tokenName] = store.getters['user/accessToken'];
+      config.headers[tokenName] = "Bearer "+localStorage.token;
     }
     if (
       config.data &&
@@ -78,7 +70,6 @@ instance.interceptors.response.use(
     if (response.status==200) {
       return res;
     } else {
-      console.log('---====', response);
       handleCode(status, data);
       return Promise.reject();
     }
@@ -87,7 +78,6 @@ instance.interceptors.response.use(
     const { response, message } = error;
     if (error.response && error.response.data) {
       const { status, data } = response;
-      console.log('---===1222=', response);
       handleCode(status, data || message);
       return Promise.reject(error);
     } else {
@@ -100,14 +90,14 @@ instance.interceptors.response.use(
       }
       if (message.includes('Request failed with status code')) {
         const code = message.substr(message.length - 3);
-        console.log('---===2244=', response);
-        message = '后端接口' + code + '异常';
+        if (code == 401){
+          router.push({ path: '/login' }).catch(() => {});
+        }
+        message = '登录失效，请重新登录！！！';
       }
-      console.log('---===224ee4=', response);
       ElMessage.error(message || `后端接口未知异常`);
       return Promise.reject(error);
     }
   }
 );
-
 export default instance;

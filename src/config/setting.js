@@ -1,6 +1,4 @@
 /**
- * @description 公共配置文件
- * @author hu-snail 1217437592@qq.com
  * vite相关的配置文件参考 https://cn.vitejs.dev/config/#define
  */
 
@@ -18,7 +16,7 @@ export const setting = {
   // 构建后是否生成 source map 文件
   sourcemap: false,
   // chunk 大小警告的限制
-  chunkSizeWarningLimit: 2000,
+  chunkSizeWarningLimit: 5000,
   // 启用/禁用 CSS 代码拆分
   // 压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能。
   cssCodeSplit: true,
@@ -39,11 +37,11 @@ export const setting = {
   // vertical布局时是否只保持一个子菜单的展开
   uniqueOpened: false,
   //token名称
-  tokenName: 'accessToken',
+  tokenName: 'Authorization',
   //是否开启登录拦截
   loginInterception: true,
   //token在localStorage、sessionStorage存储的key的名称
-  tokenTableName: 'vue3-admin-template',
+  tokenTableName: 'orderapi-admin',
   // lang storage
   langKey: 'i18nLang',
   // theme storage
@@ -53,9 +51,9 @@ export const setting = {
   //token存储位置localStorage sessionStorage
   storage: 'localStorage',
   // 标题
-  title: 'CoinBase',
+  title: 'order-apr admin',
   // 版权信息
-  copyright: '© Coinbase-Order-2023 vue3',
+  copyright: '© orderapi-admin-2023 vue3',
   // 是否显示页面底部自定义版权信息
   footerCopyright: true,
   // 缓存路由的最大数量

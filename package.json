@@ -36,13 +36,11 @@
     "qs": "^6.10.1",
     "screenfull": "^5.1.0",
     "vue": "^3.2.33",
-    "vue-i18n": "^9.1.10",
-    "vue-router": "^4.0.15",
+    "vue-router": "^4.0.13",
     "vue3-count-to": "^1.0.11",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@intlify/vite-plugin-vue-i18n": "^3.4.0",
     "@types/node": "^16.7.1",
     "@vitejs/plugin-legacy": "^1.5.3",
     "@vitejs/plugin-vue": "^1.9.2",
@@ -199,7 +197,6 @@
         "qs",
         "screenfull",
         "vue",
-        "vue-i18n",
         "vue-router",
         "vue3-count-to",
         "vuex"

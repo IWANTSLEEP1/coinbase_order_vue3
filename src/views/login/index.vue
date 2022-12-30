@@ -8,19 +8,16 @@
       <div class="login-left hidden-sm-and-down">
         <div class="login-left-wrap">
           <img class="img" src="@/assets/login.png" alt="login-bg" />
-          <h2 class="desc">{{ t('login.desc') }}</h2>
-          <p class="tip">{{ t('login.tip') }}</p>
+          <h2 class="desc">orderapi admin订单管理系统</h2>
+          <p class="tip">点击登录订单管理系统</p>
         </div>
       </div>
       <div class="login-form" :class="{ 'is-mobile': isMobile }">
         <div class="form-warp">
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane :label="t('login.title')" name="first">
+            <el-tab-pane :label="登录" name="first">
               <LoginForm />
             </el-tab-pane>
-            <!-- <el-tab-pane :label="t('register.title')" name="second">
-              <RegisterForm />
-            </el-tab-pane> -->
           </el-tabs>
         </div>
       </div>
@@ -32,12 +29,9 @@
   import { ref, computed } from 'vue';
   import { useStore } from 'vuex';
   import LoginForm from 'views/login/comp/LoginForm.vue';
-  import RegisterForm from './comp/RegisterForm.vue';
   import LangChange from '@/components/LangChange/index.vue';
-  import { useI18n } from 'vue-i18n';
 
   const store = useStore();
-  const { t } = useI18n();
   const activeName = ref('first');
   const isMobile = computed(() => {
     return store.getters['setting/isMobile'];

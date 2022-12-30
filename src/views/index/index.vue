@@ -5,10 +5,8 @@
         <el-avatar :size="50" :src="avatar"></el-avatar>
       </div>
       <div class="head-card-content">
-        <h2 class="title">{{ sayHi }}!   {{userName}},  {{ t('indexPage.descTitle') }}</h2>
-        <p class="desc">
-          巴拉巴拉巴拉巴拉巴拉呜呜呜呜呜呜呜呜无无无无无无无无无无无无无
-        </p>
+        <h2 class="title">{{ sayHi }}!   {{userName}},  开始您一天的工作吧！</h2>
+        <p class="desc"></p>
       </div>
     </div>
     <div class="content">
@@ -16,7 +14,7 @@
         <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
           <el-card class="card" shadow="hover">
             <template #header>
-              <h3 class="title">{{ t('indexPage.resourceTitle') }}</h3>
+              <h3 class="title">Vue3相关资源推荐</h3>
             </template>
             <div class="card-body" :class="{ mobile: isMobile }">
               <div
@@ -35,7 +33,7 @@
           </el-card>
           <el-card class="card" shadow="hover">
             <template #header>
-              <h3 class="title">{{ t('indexPage.envTitle') }}</h3>
+              <h3 class="title">生产环境依赖信息</h3>
             </template>
             <el-descriptions class="margin-top" :column="3" border>
               <el-descriptions-item v-for="(value, key) in packpage.dependencies" :key="key">
@@ -48,9 +46,9 @@
           </el-card>
         </el-col>
         <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-          <el-card class="card" shadow="hover">
+          <!-- <el-card class="card" shadow="hover">
             <template #header>
-              <h3 class="title">{{ t('indexPage.orderTitle') }}</h3>
+              <h3 class="title">订单清单</h3>
             </template>
             <div class="count-box">
               <div class="item" v-for="(item, index) in state.orderList" :key="index">
@@ -64,10 +62,10 @@
                 ></CountTo>
               </div>
             </div>
-          </el-card>
+          </el-card> -->
           <el-card class="card" shadow="hover">
             <template #header>
-              <h3 class="title">{{ t('indexPage.skillTitle') }}</h3>
+              <h3 class="title">技能列表</h3>
             </template>
             <div v-for="(item, index) in state.skillList" :key="index">
               <div class="skill-title">{{ item.title }}</div>
@@ -79,7 +77,7 @@
             </div>
           </el-card>
           <Echarts
-            :title="t('indexPage.chartTitle')"
+            :title="基础平滑折线图"
             :index="1"
             headerIcon="icon-chart-line"
             :style="{
@@ -106,17 +104,13 @@
 
 <script setup>
   import { ref, computed, reactive, onBeforeMount } from 'vue';
-
   import { CountTo } from 'vue3-count-to';
   import Echarts from '@/components/Echarts/index.vue';
-
   import packpage from '../../../package.json';
-  import { useI18n } from 'vue-i18n';
   import { getResouceList } from '@/api/index';
 
   import { useStore } from 'vuex';
   const store = useStore();
-  const { t } = useI18n();
   const user = localStorage.username
   const userName = ref(user);
   const state = reactive({
@@ -129,14 +123,14 @@
   const hour = new Date().getHours();
   const thisTime =
     hour < 8
-      ? t('sayHi.early')
+      ? "早上好"
       : hour <= 11
-      ? t('sayHi.morning')
+      ? '上午好'
       : hour <= 13
-      ? t('sayHi.noon')
+      ? '中午好'
       : hour < 18
-      ? t('sayHi.afternoon')
-      : t('sayHi.evening');
+      ?'下午好'
+      : '晚上好';
   const sayHi = ref(thisTime);
   const avatar = ref('https://i.gtimg.cn/club/item/face/img/2/15922_100.gif');
 

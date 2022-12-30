@@ -4,11 +4,12 @@
     <el-form :model="ruleForm" :rules="rules" ref="validateForm" class="login-ruleForm">
       <el-form-item prop="password" label="Password">
         <el-input
-          :placeholder="t('login.password')"
+          :placeholder="密码"
           type="password"
           v-model.trim="ruleForm.password"
           show-password
           style="width:100%"
+          @keyup.enter="handleLogin"
         >
           <template #prefix>
             <icon-lock theme="outline" size="16" fill="#999" />
@@ -16,9 +17,7 @@
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" plain :loading="loading" class="login-btn" round @click="handleLogin">{{
-          t('login.loginBtn')
-        }}</el-button>
+        <el-button type="primary" plain :loading="loading" class="login-btn" round @click="handleLogin">确认</el-button>
       </el-form-item>
   </el-form>
   </div>
@@ -28,11 +27,9 @@
   import { reactive, toRefs, ref, unref, watch } from 'vue';
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
-  import { useI18n } from 'vue-i18n';
-  import { ElMessage, ElMessageBox } from 'element-plus';
+  import { ElMessage} from 'element-plus';
   export default {
     setup() {
-      const { t } = useI18n();
       const store = useStore();
       const router = useRouter();
       const validateForm = ref(null);
@@ -77,7 +74,6 @@
         ...toRefs(state),
         validateForm,
         handleLogin,
-        t,
       };
     },
   };

@@ -2,14 +2,14 @@
   <div class="right-panel">
     <icon-theme
       class="icon-hover theme"
-      :title="t('navbar.theme')"
+      :title="切换换肤"
       theme="outline"
       :strokeWidth="4"
       size="16"
       :fill="color"
       @click="handleChangeTheme"
     />
-    <el-popover v-if="settings.notice" placement="bottom" :width="320" trigger="hover">
+    <!-- <el-popover v-if="settings.notice" placement="bottom" :width="320" trigger="hover">
       <template #reference>
         <icon-remind
           class="icon-hover refresh"
@@ -28,13 +28,13 @@
           <el-tab-pane :label="`${t('tabs.email')} (0)`" name="third">暂无邮件</el-tab-pane>
         </el-tabs>
       </div>
-    </el-popover>
+    </el-popover> -->
 
     <FullScreen :color="color" v-if="settings.fullScreen" @refresh="onRefresh" />
-    <LangChange :color="color" />
+    <!-- <LangChange :color="color" /> -->
     <icon-refresh
       v-if="settings.refresh"
-      :title="t('navbar.refresh')"
+      :title="刷新"
       @click="handleRefresh"
       class="icon-hover refresh"
       theme="filled"
@@ -60,7 +60,7 @@
   import Cell from '@/components/Cell/index.vue';
   import LangChange from '@/components/LangChange/index.vue';
 
-  import { useI18n } from 'vue-i18n';
+  // import { useI18n } from 'vue-i18n';
   import { useStore } from 'vuex';
 
   import { computed, nextTick, ref } from 'vue';
@@ -71,7 +71,7 @@
     },
   });
 
-  const { t } = useI18n();
+  // const { t } = useI18n();
   const store = useStore();
 
   let activeName = ref('first');

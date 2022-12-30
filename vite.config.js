@@ -8,7 +8,7 @@ import { svgBuilder } from './src/plugin/svgBuilder';
 
 import OptimizationPersist from 'vite-plugin-optimize-persist';
 import PkgConfig from 'vite-plugin-package-config';
-import vueI18n from '@intlify/vite-plugin-vue-i18n';
+// import vueI18n from '@intlify/vite-plugin-vue-i18n';
 
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
@@ -38,7 +38,7 @@ const {
 
 const isDev = process.env.NODE_ENV === 'development';
 
-const loadI18n = isDev ? vueI18n({ include: path.resolve(__dirname, './src/locales/**') }) : '';
+// const loadI18n = isDev ? vueI18n({ include: path.resolve(__dirname, './src/locales/**') }) : '';
 // https://vitejs.dev/config/
 export default defineConfig({
   root: process.cwd(),
@@ -50,7 +50,6 @@ export default defineConfig({
     vue(),
     PkgConfig(),
     OptimizationPersist(),
-    loadI18n,
     legacy({
       polyfills: ['es.promise.finally', 'es/map', 'es/set'],
       modernPolyfills: ['es.promise.finally'],
@@ -106,7 +105,7 @@ export default defineConfig({
     },
     proxy: {
       "/api": {
-          target: "http://127.0.0.1:9090",
+          target: "http://127.0.0.1:8090",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
       },
@@ -145,9 +144,9 @@ export default defineConfig({
     brotliSize,
     // rollupOptions: {
     //   output: {
-    //     // chunkFileNames: 'static/js/[name]-[hash].js',
-    //     // entryFileNames: 'static/js/[name]-[hash].js',
-    //     // assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
+    //     chunkFileNames: 'static/js/[name]-[hash].js',
+    //     entryFileNames: 'static/js/[name]-[hash].js',
+    //     assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
     //   },
     // },
     terserOptions: {

@@ -67,11 +67,9 @@
   import { reactive, toRefs } from 'vue';
   import Descrition from '@/components/Descrition/index.vue';
   import Echarts from '@/components/Echarts/index.vue';
-  import { useI18n } from 'vue-i18n';
   export default {
     components: { Descrition, Echarts },
     setup() {
-      const { t } = useI18n();
       const state = reactive({
         series: [{ data: [150, 230, 224, 218, 135, 147, 260], type: 'line' }],
         series2: [
@@ -182,7 +180,7 @@
 
       return {
         ...toRefs(state),
-        t,
+        // t,
       };
     },
   };

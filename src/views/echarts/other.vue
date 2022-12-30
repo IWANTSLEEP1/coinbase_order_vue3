@@ -109,11 +109,11 @@
   import { reactive, toRefs } from 'vue';
   import Descrition from '@/components/Descrition/index.vue';
   import Echarts from '@/components/Echarts/index.vue';
-  import { useI18n } from 'vue-i18n';
+  // import { useI18n } from 'vue-i18n';
   export default {
     components: { Descrition, Echarts },
     setup() {
-      const { t } = useI18n();
+      // const { t } = useI18n();
       const state = reactive({
         xAxis: {
           data: ['2017-10-24', '2017-10-25', '2017-10-26', '2017-10-27'],

@@ -4,7 +4,7 @@
       <el-col :xs="4" :sm="12" :md="12" :lg="12" :xl="12" v-if="settings.mode !== ''">
         <div class="left-panel">
           <component
-            :title="collapse ? t('navbar.unfold') : t('navbar.fold')"
+            :title="collapse ?  '展开': '收起'"
             class="icon-hover fold"
             :is="collapse ? 'icon-menu-fold-one' : 'icon-menu-unfold-one'"
             theme="filled"
@@ -35,8 +35,8 @@
   import { computed } from 'vue';
   import { useStore } from 'vuex';
 
-  import { useI18n } from 'vue-i18n';
-  const { t } = useI18n();
+  // import { useI18n } from 'vue-i18n';
+  // const { t } = useI18n();
 
   const store = useStore();
 

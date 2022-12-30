@@ -10,17 +10,17 @@
   import { onMounted, computed, ref, watch } from 'vue';
   import { useStore } from 'vuex';
 
-  import i18n from '@/locales';
+  // import i18n from '@/locales';
   import { useRouter } from 'vue-router';
-  const locale = i18n.global.locale;
+  // const locale = i18n.global.locale;
 
   const store = useStore();
 
-  const localLanguage = computed(() => {
-    const isDev = process.env.NODE_ENV === 'development';
-    if (isDev) return i18n.global.messages.value[locale.value];
-    else return i18n.global.messages[locale];
-  });
+  // const localLanguage = computed(() => {
+  //   const isDev = process.env.NODE_ENV === 'development';
+  //   if (isDev) return i18n.global.messages.value[locale.value];
+  //   else return i18n.global.messages[locale];
+  // });
 
   const scroll = ref(null);
 

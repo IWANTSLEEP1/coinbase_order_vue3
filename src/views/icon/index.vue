@@ -57,13 +57,11 @@
   import { getIcons } from '@/api/icon';
   import { reactive, toRefs, onBeforeMount } from 'vue';
   import Descrition from '@/components/Descrition/index.vue';
-  import { useI18n } from 'vue-i18n';
   import icons from '@icon-park/vue-next/icons.json';
   import { ElMessage } from 'element-plus';
   import { Search } from '@element-plus/icons-vue';
   import { toClipboard } from '@soerenmartius/vue3-clipboard';
 
-  const { t } = useI18n();
   const state = reactive({
     icon: {},
     list: [],

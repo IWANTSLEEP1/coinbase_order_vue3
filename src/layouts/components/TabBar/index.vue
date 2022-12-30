@@ -63,14 +63,12 @@
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
 
-  import { useI18n } from 'vue-i18n';
 
   export default {
     name: 'TabBar',
     setup() {
       const store = useStore();
       const router = useRouter();
-      const { t } = useI18n();
 
       const state = reactive({
         affixtabs: [],
@@ -79,27 +77,27 @@
         commandList: [
           {
             command: 'refreshRoute',
-            text: t('tagsView.refresh'),
+            text: '重新加载',
             icon: 'icon-refresh',
           },
           {
             command: 'closeOtherstabs',
-            text: t('tagsView.closeOthers'),
+            text:'关闭其它',
             icon: 'icon-close',
           },
           {
             command: 'closeLefttabs',
-            text: t('tagsView.closeLeft'),
+            text: '关闭左侧',
             icon: 'icon-to-left',
           },
           {
             command: 'closeRighttabs',
-            text: t('tagsView.closeRight'),
+            text: '关闭右侧',
             icon: 'icon-to-right',
           },
           {
             command: 'closeAlltabs',
-            text: t('tagsView.closeAll'),
+            text:'关闭所有',
             icon: 'icon-minus',
           },
         ],
