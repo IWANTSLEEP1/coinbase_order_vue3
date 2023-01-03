@@ -89,10 +89,8 @@ export const asyncRoutes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: constantRoutes,
+  routes: constantRoutes
 });
-
-// reset router
 export function resetRouter() {
   router.getRoutes().forEach((route) => {
     const { name } = route;

@@ -28,12 +28,12 @@ const actions = {
     commit('setRoutes', finallyAsyncRoutes);
     return finallyAsyncRoutes;
   },
-  async setAllRoutes({ commit }) {
-    let { data } = await getRouterList();
+  setAllRoutes({ commit }) {
+    // let { data } = await getRouterList();
     // data.push({ path: '*', redirect: '/404', hidden: true });
-    let accessRoutes = convertRouter(data);
-    commit('setAllRoutes', accessRoutes);
-    return accessRoutes;
+    // let accessRoutes = convertRouter(data);
+    commit('setAllRoutes', asyncRoutes);
+    return asyncRoutes;
   },
   setPartialRoutes({ commit }, accessRoutes) {
     commit('setPartialRoutes', accessRoutes);

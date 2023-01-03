@@ -171,7 +171,7 @@
   };
 
   onBeforeMount(() => {
-    onGetResouceList();
+    // onGetResouceList();
   });
 </script>
 

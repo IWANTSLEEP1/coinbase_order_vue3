@@ -4,10 +4,7 @@ import { getAccessToken, removeAccessToken, setAccessToken } from '@/utils/acces
 
 import { setting } from '@/config/setting';
 const { title, tokenName } = setting;
-import { resetRouter } from '@/router';
-
-
-import { ElMessage, ElNotification } from 'element-plus';
+import { ElMessage} from 'element-plus';
 
 const state = {
   accessToken: getAccessToken(),
