@@ -9,29 +9,8 @@
       :fill="color"
       @click="handleChangeTheme"
     />
-    <!-- <el-popover v-if="settings.notice" placement="bottom" :width="320" trigger="hover">
-      <template #reference>
-        <icon-remind
-          class="icon-hover refresh"
-          theme="outline"
-          size="16"
-          :fill="color"
-          :strokeWidth="3"
-        />
-      </template>
-      <div class="message-box">
-        <el-tabs v-model="activeName" stretch>
-          <el-tab-pane :label="`${t('tabs.notice')} (5)`" name="first">
-            <Cell :list="noticeList" />
-          </el-tab-pane>
-          <el-tab-pane :label="`${t('tabs.message')} (0)`" name="second">暂无消息</el-tab-pane>
-          <el-tab-pane :label="`${t('tabs.email')} (0)`" name="third">暂无邮件</el-tab-pane>
-        </el-tabs>
-      </div>
-    </el-popover> -->
 
     <FullScreen :color="color" v-if="settings.fullScreen" @refresh="onRefresh" />
-    <!-- <LangChange :color="color" /> -->
     <icon-refresh
       v-if="settings.refresh"
       :title="刷新"
@@ -54,13 +33,8 @@
 </script>
 
 <script setup>
-  import { noticeList } from './data';
-
   import FullScreen from '@/components/FullScreen/index.vue';
   import Cell from '@/components/Cell/index.vue';
-  import LangChange from '@/components/LangChange/index.vue';
-
-  // import { useI18n } from 'vue-i18n';
   import { useStore } from 'vuex';
 
   import { computed, nextTick, ref } from 'vue';

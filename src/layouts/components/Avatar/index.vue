@@ -16,7 +16,7 @@
     </template>
   </el-dropdown>
 
-  <el-dialog v-model="dialogFormVisible" :title="修改密码" width="35%" center>
+  <el-dialog v-model="dialogFormVisible" title="修改密码" width="30%" center>
     <el-form :model="ruleForm" :rules="rules" ref="validateForm">
       <el-form-item label="Old Password" :label-width="formLabelWidth" prop="oldPwd">
         <el-input

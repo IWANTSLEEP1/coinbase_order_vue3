@@ -10,88 +10,7 @@
       </div>
     </div>
     <div class="content">
-      <el-row :gutter="10">
-        <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
-          <el-card class="card" shadow="hover">
-            <template #header>
-              <h3 class="title">Vue3相关资源推荐</h3>
-            </template>
-            <div class="card-body" :class="{ mobile: isMobile }">
-              <div
-                class="item"
-                v-for="(item, index) in state.list"
-                @click="handleToDetail(item.url)"
-                :key="index"
-              >
-                <div class="lf">
-                  <!-- <img class="img" :src="`${state.prefix}${item.logo}`" /> -->
-                  <div class="title" v-if="item.title">{{ item.title }}</div>
-                </div>
-                <div class="desc"> {{ item.desc }} </div>
-              </div>
-            </div>
-          </el-card>
-          <el-card class="card" shadow="hover">
-            <template #header>
-              <h3 class="title">生产环境依赖信息</h3>
-            </template>
-            <el-descriptions class="margin-top" :column="3" border>
-              <el-descriptions-item v-for="(value, key) in packpage.dependencies" :key="key">
-                <template #label>
-                  {{ key }}
-                </template>
-                {{ value }}
-              </el-descriptions-item>
-            </el-descriptions>
-          </el-card>
-        </el-col>
-        <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-          <!-- <el-card class="card" shadow="hover">
-            <template #header>
-              <h3 class="title">订单清单</h3>
-            </template>
-            <div class="count-box">
-              <div class="item" v-for="(item, index) in state.orderList" :key="index">
-                <span class="label">{{ t('indexPage.order.' + item.key) }}</span>
-                <CountTo
-                  class="count"
-                  :class="item.status"
-                  :startVal="0"
-                  :endVal="item.value"
-                  :duration="3000"
-                ></CountTo>
-              </div>
-            </div>
-          </el-card> -->
-          <el-card class="card" shadow="hover">
-            <template #header>
-              <h3 class="title">技能列表</h3>
-            </template>
-            <div v-for="(item, index) in state.skillList" :key="index">
-              <div class="skill-title">{{ item.title }}</div>
-              <el-progress
-                :stroke-width="8"
-                :percentage="item.percentage"
-                :color="item.color"
-              ></el-progress>
-            </div>
-          </el-card>
-          <Echarts
-            :title="基础平滑折线图"
-            :index="1"
-            headerIcon="icon-chart-line"
-            :style="{
-              height: '200px',
-            }"
-            :options="{
-              series: series2,
-              xAxis,
-              yAxis,
-              toolbox,
-            }"
-          />
-        </el-col>
-      </el-row>
+    
     </div>
   </div>
 </template>
@@ -105,9 +24,7 @@
 <script setup>
   import { ref, computed, reactive, onBeforeMount } from 'vue';
   import { CountTo } from 'vue3-count-to';
-  import Echarts from '@/components/Echarts/index.vue';
   import packpage from '../../../package.json';
-  import { getResouceList } from '@/api/index';
 
   import { useStore } from 'vuex';
   const store = useStore();
@@ -159,12 +76,6 @@
     return store.getters['setting/isMobile'];
   });
 
-  const onGetResouceList = () => {
-    getResouceList().then((res) => {
-      const { list, prefix, orderList, skillList } = res.data;
-      Object.assign(state, { list, prefix, orderList, skillList });
-    });
-  };
 
   const handleToDetail = (url) => {
     window.open(url);

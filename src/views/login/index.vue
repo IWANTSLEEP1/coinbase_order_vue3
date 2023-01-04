@@ -2,7 +2,6 @@
   <div class="login-wrapper">
     <el-header class="header">
       <Logo class="logo" />
-      <LangChange class="lang" color="#fff" />
     </el-header>
     <div class="login-container">
       <div class="login-left hidden-sm-and-down">
@@ -29,7 +28,6 @@
   import { ref, computed } from 'vue';
   import { useStore } from 'vuex';
   import LoginForm from 'views/login/comp/LoginForm.vue';
-  import LangChange from '@/components/LangChange/index.vue';
 
   const store = useStore();
   const activeName = ref('first');

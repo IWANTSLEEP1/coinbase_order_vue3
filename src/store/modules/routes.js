@@ -1,6 +1,5 @@
 import { asyncRoutes, constantRoutes } from '@/router';
-import { getRouterList } from '@/api/router';
-import { convertRouter, filterAsyncRoutes } from '@/utils/handleRoutes';
+import { filterAsyncRoutes } from '@/utils/handleRoutes';
 
 const state = () => ({
   routes: [],

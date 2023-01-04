@@ -1,16 +1,14 @@
 import axios from 'axios';
 import { netConfig } from '@/config/net.config';
-const { baseURL, contentType, invalidCode,notFound, noPermissionCode, requestTimeout, successCode } =
+const { baseURL, contentType, invalidCode,notFound, noPermissionCode, requestTimeout } =
   netConfig;
 import store from '@/store/index.js';
 import router from '@/router/index.js';
-import { ElMessageBox, ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import qs from 'qs';
 import { setting } from '@/config/setting';
 const { tokenName } = setting;
-
 // eslint-disable-next-line no-unused-vars
-let tokenLose = true;
 
 /**
  *
@@ -44,7 +42,6 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(
-  console.log(localStorage.token),
   (config) => {
     if (store.getters['user/accessToken']) {
       config.headers[tokenName] = "Bearer "+localStorage.token;
@@ -65,7 +62,6 @@ instance.interceptors.response.use(
   (response) => {
     const res = response.data;
     const { status,data } = response;
-    // const { code, msg } = data;
     // 操作成功
     if (response.status==200) {
       return res;

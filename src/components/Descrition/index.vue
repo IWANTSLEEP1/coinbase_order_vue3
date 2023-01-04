@@ -1,4 +1,3 @@
-<!--  author:hu-snail 1217437592@qq.com  标题/描述组件 -->
 <template>
   <div class="desc-wrapper">
     <h2 class="title">{{ title }}</h2>

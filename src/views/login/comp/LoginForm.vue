@@ -121,11 +121,11 @@
                   localStorage.clear();
                   localStorage.token = res.data[0].access_token;
                   localStorage.username = res.data[0].username;
-                  const routerPath =state.redirect === '/404' || state.redirect === '/401' ? '/' : state.redirect;
-                  router.push(routerPath).catch(() => {});
+                  router.push('/').catch(() => {});
                   state.loading = false;
               })
-              .catch(() => {
+              .catch((err) => {
+                console.log(err)
                 state.loading = false;
               });
           }

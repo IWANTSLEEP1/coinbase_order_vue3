@@ -17,5 +17,5 @@ export const netConfig = {
   //not fount
   notFound: 404,
   //无权限code
-  noPermissionCode: 400,
+  noPermissionCode: 403,
 };

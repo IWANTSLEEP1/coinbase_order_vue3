@@ -1,8 +1,3 @@
-/**
- * @description 主题全局配置状态
- * @author hu-snail 1217437592@qq.com
- */
-
 import { themeConfig } from '@/config/theme';
 import { setting } from '@/config/setting';
 import { getLanguage, setLanguage, setSettings, getSettings } from '@/utils/cookies';

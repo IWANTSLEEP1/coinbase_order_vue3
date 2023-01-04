@@ -1,7 +1,3 @@
-/**
- * @author hujiangjun 1217437592@qq.com
- * @description 路由控制
- */
 import router from '@/router';
 import store from '@/store';
 import NProgress from 'nprogress';
@@ -9,9 +5,7 @@ import 'nprogress/nprogress.css';
 import { getPageTitle } from '@/utils/index';
 import { setting } from '@/config/setting';
 let { authentication, loginInterception, progressBar, routesWhiteList, recordRoute } = setting;
-
 authentication = 'all'
-
 NProgress.configure({
   easing: 'ease',
   speed: 500,
@@ -36,14 +30,8 @@ router.beforeEach(async (to, from, next) => {
       } else {
         try {
           let permissions;
-          if (true) {
-            //settings.js loginInterception为false时，创建虚拟权限
-            await store.dispatch('user/setPermissions', ['admin']);
-            permissions = ['admin'];
-          } else {
-            permissions = await store.dispatch('user/getUserInfo');
-          }
-
+          await store.dispatch('user/setPermissions', ['admin']);
+          permissions = ['admin'];
           let accessRoutes = [];
           if (authentication === 'intelligence') {
             accessRoutes = await store.dispatch('routes/setRoutes', permissions);
