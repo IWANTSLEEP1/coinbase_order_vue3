@@ -82,10 +82,6 @@ export default defineConfig({
       supportTs: false,
       localEnabled: isDev,
       prodEnabled: !isDev,
-      injectCode: `
-          import { setupProdMockServer } from './mockProdServer';
-          setupProdMockServer();
-        `,
     }),
     svgBuilder('./src/icons/svg/'),
   ],
