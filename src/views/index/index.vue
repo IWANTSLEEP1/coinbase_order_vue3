@@ -5,12 +5,57 @@
         <el-avatar :size="50" :src="avatar"></el-avatar>
       </div>
       <div class="head-card-content">
-        <h2 class="title">{{ sayHi }}!   {{userName}},  开始您一天的工作吧！</h2>
+        <h2 class="title">{{ sayHi }}! {{ userName }}, 开始您一天的工作吧！</h2>
         <p class="desc"></p>
       </div>
     </div>
     <div class="content">
-    
+      <el-row :gutter="10">
+        <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
+          <Echarts
+            title="订单金额月统计图"
+            :index="1"
+            headerIcon="icon-chart-line"
+            :style="{
+              height: '250px',
+            }"
+            :options="orderMonthOptions"
+          />
+          <el-card class="card" shadow="hover">
+            <template #header>
+              <h3 class="title">{{ orderMonthOptions }}</h3>
+              <el-button @click="orderMonthOptions.series[1].data = [1, 2, 4, 89]">123</el-button>
+            </template>
+            <el-descriptions class="margin-top" :column="3" border>
+              <el-descriptions-item v-for="(value, key) in packpage.dependencies" :key="key">
+                <template #label>
+                  {{ key }}
+                </template>
+                {{ value }}
+              </el-descriptions-item>
+            </el-descriptions>
+          </el-card>
+        </el-col>
+        <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+          <el-card class="card" shadow="hover">
+            <template #header>
+              <h3 class="title">订单清单</h3>
+            </template>
+            <div class="count-box">
+              <div class="item" v-for="(item, index) in state.orderList" :key="index">
+                <span class="label">{{ item.key }}</span>
+                <CountTo
+                  class="count"
+                  :class="item.status"
+                  :startVal="0"
+                  :endVal="item.value"
+                  :duration="3000"
+                ></CountTo>
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -22,67 +67,98 @@
 </script>
 
 <script setup>
-  import { ref, computed, reactive, onBeforeMount } from 'vue';
+  import { ref, computed, reactive, onMounted } from 'vue';
   import { CountTo } from 'vue3-count-to';
   import packpage from '../../../package.json';
-
+  import Echarts from '@/components/Echarts/index.vue';
   import { useStore } from 'vuex';
   const store = useStore();
-  const user = localStorage.username
+  const user = localStorage.username;
   const userName = ref(user);
-  const state = reactive({
-    list: [],
-    prefix: '',
-    orderList: [],
-    skillList: [],
+  const orderMonthOptions = reactive({
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'cross' },
+    },
+    legend: {},
+    xAxis: [
+      {
+        type: 'category',
+        axisTick: {
+          alignWithLabel: true,
+        },
+        data: [],
+      },
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        name: '每日订单数',
+        position: 'right',
+        axisLabel: {
+          formatter: '{value}',
+        },
+      },
+      {
+        type: 'value',
+        name: '每日订单总额',
+        position: 'left',
+        axisLabel: {
+          formatter: '{value}',
+        },
+      },
+    ],
+    series: [
+      {
+        name: '每日订单数',
+        type: 'bar',
+        yAxisIndex: 0,
+        data: [],
+      },
+      {
+        name: '每日订单总额',
+        type: 'line',
+        // smooth: true,
+        yAxisIndex: 1,
+        data: [],
+      },
+    ],
   });
-
+  const state = reactive({
+    orderList: []
+  });
   const hour = new Date().getHours();
   const thisTime =
     hour < 8
-      ? "早上好"
+      ? '早上好'
       : hour <= 11
       ? '上午好'
       : hour <= 13
       ? '中午好'
       : hour < 18
-      ?'下午好'
+      ? '下午好'
       : '晚上好';
   const sayHi = ref(thisTime);
   const avatar = ref('https://i.gtimg.cn/club/item/face/img/2/15922_100.gif');
 
-  const series2 = reactive([
-    {
-      data: [820, 932, 901, 934, 1290, 1330, 1320],
-      type: 'line',
-      smooth: true,
-    },
-  ]);
-
-  const xAxis = reactive({
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-  });
-
-  const yAxis = reactive({
-    type: 'value',
-  });
-
-  const toolbox = reactive({
-    show: true,
-  });
-
   const isMobile = computed(() => {
     return store.getters['setting/isMobile'];
   });
-
-
-  const handleToDetail = (url) => {
-    window.open(url);
+  const onGetOrderPanelData = () => {
+    store.dispatch('index/getOrderPanelData').then((res) => {
+      state.orderList = res;
+    });
   };
-
-  onBeforeMount(() => {
-    // onGetResouceList();
+  const onGetOrderMonth = () => {
+    store.dispatch('index/getOrderAmountMonthlyData').then((res) => {
+      orderMonthOptions.xAxis[0].data = res[0];
+      orderMonthOptions.series[0].data = res[1];
+      orderMonthOptions.series[1].data = res[2];
+    });
+  };
+  onMounted(async () => {
+    onGetOrderPanelData();
+    onGetOrderMonth();
   });
 </script>
 

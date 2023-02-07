@@ -33,5 +33,4 @@ app.use(store);
 import iconPark from './plugin/icon-park';
 iconPark(app);
 
-
 app.mount('#app');

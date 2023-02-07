@@ -1,6 +1,11 @@
 <template>
-  <div style="width:35%;position: absolute;top: 40%;left: 50%;transform: translate(-50%, -50%);" >
-  <img src="@/assets/imgs/Coinbase1.jpg" style="width:25%;margin-left:200px;margin-bottom: 10px;">
+  <div
+    style="width: 35%; position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%)"
+  >
+    <img
+      src="@/assets/imgs/Coinbase1.jpg"
+      style="width: 25%; margin-left: 200px; margin-bottom: 10px"
+    />
     <el-form :model="ruleForm" :rules="rules" ref="validateForm" class="login-ruleForm">
       <el-form-item prop="password" label="Password">
         <el-input
@@ -8,7 +13,7 @@
           type="password"
           v-model.trim="ruleForm.password"
           show-password
-          style="width:100%"
+          style="width: 100%"
           @keyup.enter="handleLogin"
         >
           <template #prefix>
@@ -17,9 +22,17 @@
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" plain :loading="loading" class="login-btn" round @click="handleLogin">确认</el-button>
+        <el-button
+          type="primary"
+          plain
+          :loading="loading"
+          class="login-btn"
+          round
+          @click="handleLogin"
+          >确认</el-button
+        >
       </el-form-item>
-  </el-form>
+    </el-form>
   </div>
 </template>
 
@@ -27,7 +40,7 @@
   import { reactive, toRefs, ref, unref, watch } from 'vue';
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
-  import { ElMessage} from 'element-plus';
+  import { ElMessage } from 'element-plus';
   export default {
     setup() {
       const store = useStore();
@@ -39,10 +52,10 @@
         },
         loading: false,
         redirect: undefined,
-        captcha_img:"",
-        code_id:"",
+        captcha_img: '',
+        code_id: '',
         rules: {
-          password: [{ required: true, message: "请输入密码", trigger: 'blur' }],
+          password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         },
       });
 
@@ -54,7 +67,7 @@
             state.valid = true;
             state.loading = true;
             store
-              .dispatch('user/createSuperUser',state.ruleForm.password)
+              .dispatch('user/createSuperUser', state.ruleForm.password)
               .then(() => {
                 // 创建成功
                 ElMessage({

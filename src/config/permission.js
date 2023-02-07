@@ -2,10 +2,9 @@ import router from '@/router';
 import store from '@/store';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { getPageTitle } from '@/utils/index';
 import { setting } from '@/config/setting';
 let { authentication, loginInterception, progressBar, routesWhiteList, recordRoute } = setting;
-authentication = 'all'
+authentication = 'all';
 NProgress.configure({
   easing: 'ease',
   speed: 500,
@@ -61,7 +60,7 @@ router.beforeEach(async (to, from, next) => {
       if (progressBar) NProgress.done();
     }
   }
-  document.title = getPageTitle(to.meta.title);
+  document.title = '订单管理系统';
 });
 router.afterEach(() => {
   if (progressBar) NProgress.done();

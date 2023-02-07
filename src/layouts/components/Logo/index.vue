@@ -4,7 +4,7 @@
     class="logo-wrapper"
     :class="{ unfold: collapse, horizontal: mode === 'horizontal' }"
   >
-    <img src="@/assets/imgs/coinbase2.png" width="35" height="35">
+    <img src="@/assets/imgs/coinbase2.png" width="35" height="35" />
     <span class="logo-title" :style="{ color: textColor }" v-if="!collapse"> orderapi admin </span>
   </div>
 </template>

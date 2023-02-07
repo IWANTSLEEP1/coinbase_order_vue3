@@ -1,8 +1,5 @@
 <template>
-  <span
-    class="icon-hover full-screen-wrapper"
-    :title="isFullScreen ? '退出全屏' : '全屏'"
-  >
+  <span class="icon-hover full-screen-wrapper" :title="isFullScreen ? '退出全屏' : '全屏'">
     <component
       theme="filled"
       size="16"
@@ -28,7 +25,6 @@
       default: '#666',
     },
   });
-
 
   const isFullScreen = computed(() => {
     return store.getters['setting/isFullScreen'];

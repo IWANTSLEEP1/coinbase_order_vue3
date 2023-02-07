@@ -4,7 +4,7 @@
       <el-col :xs="4" :sm="12" :md="12" :lg="12" :xl="12" v-if="settings.mode !== ''">
         <div class="left-panel">
           <component
-            :title="collapse ?  '展开': '收起'"
+            :title="collapse ? '展开' : '收起'"
             class="icon-hover fold"
             :is="collapse ? 'icon-menu-fold-one' : 'icon-menu-unfold-one'"
             theme="filled"

@@ -42,7 +42,7 @@ export const asyncRoutes = [
         name: 'Index',
         component: () => import('../views/index/index.vue'),
         meta: {
-          title: "首页",
+          title: '首页',
           icon: 'icon-home',
           affix: true,
           noKeepAlive: true,
@@ -50,13 +50,13 @@ export const asyncRoutes = [
       },
     ],
   },
-  
+
   {
     path: '/userPage',
     name: 'UserPage',
     component: Layout,
     meta: {
-      title: "用户管理",
+      title: '用户管理',
       icon: 'icon-user',
     },
     children: [
@@ -65,8 +65,8 @@ export const asyncRoutes = [
         name: 'Role',
         component: () => import('@/views/users/role.vue'),
         meta: {
-          title: "角色界面",
-          icon: 'icon-male',
+          title: '角色',
+          icon: 'icon-star',
         },
       },
       {
@@ -74,7 +74,7 @@ export const asyncRoutes = [
         name: 'User',
         component: () => import('@/views/users/index.vue'),
         meta: {
-          title: "用户界面",
+          title: '管理员',
           icon: 'icon-user',
         },
       },
@@ -89,7 +89,7 @@ export const asyncRoutes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: constantRoutes
+  routes: constantRoutes,
 });
 export function resetRouter() {
   router.getRoutes().forEach((route) => {

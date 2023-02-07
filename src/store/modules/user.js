@@ -1,10 +1,26 @@
-import { getUserInfo, login, captcha, getAllUsers, getAllRoles, getRole,editRole,delRole,
-  addUser,getUser,editUser,deleteUser,addSuperUser,signIn,addRole,editPwd} from '@/api/user';
+import {
+  getUserInfo,
+  login,
+  captcha,
+  getAllUsers,
+  getAllRoles,
+  getRole,
+  editRole,
+  delRole,
+  addUser,
+  getUser,
+  editUser,
+  deleteUser,
+  addSuperUser,
+  signIn,
+  addRole,
+  editPwd,
+} from '@/api/user';
 import { getAccessToken, removeAccessToken, setAccessToken } from '@/utils/accessToken';
 
 import { setting } from '@/config/setting';
 const { title, tokenName } = setting;
-import { ElMessage} from 'element-plus';
+import { ElMessage } from 'element-plus';
 
 const state = {
   accessToken: getAccessToken(),
@@ -38,10 +54,9 @@ const actions = {
   setPermissions({ commit }, permissions) {
     commit('setPermissions', permissions);
   },
-  async login({ commit },form) {
+  async login({ commit }, form) {
     const data = await login(form);
-    return data
-    
+    return data;
   },
   async getUserInfo({ commit, state }) {
     const { data } = await getUserInfo(state.accessToken);
@@ -61,63 +76,63 @@ const actions = {
     }
   },
   async captcha({ dispatch }) {
-    const data = await captcha()
-    return data
+    const data = await captcha();
+    return data;
   },
 
   async getAllUsers({ dispatch }) {
-    const data = await getAllUsers()
-    return data
-  },
-  
-  async signIn({ dispatch }) {
-    const data = await signIn()
-    return data
-  },
-  async getUser({ dispatch },email) {
-    const data = await getUser(email)
-    return data
+    const data = await getAllUsers();
+    return data;
   },
 
-  async addUser({ dispatch },data) {
-    const res = await addUser(data)
-    return res
+  async signIn({ dispatch }) {
+    const data = await signIn();
+    return data;
   },
-  async editUser({ dispatch },data) {
-    const res = await editUser(data)
-    return res
+  async getUser({ dispatch }, email) {
+    const data = await getUser(email);
+    return data;
   },
-  async deleteUser({ dispatch },email) {
-    const res = await deleteUser(email)
-    return res
+
+  async addUser({ dispatch }, data) {
+    const res = await addUser(data);
+    return res;
   },
-  async createSuperUser({ dispatch },pwd) {
-    const res = await addSuperUser(pwd)
-    return res
+  async editUser({ dispatch }, data) {
+    const res = await editUser(data);
+    return res;
+  },
+  async deleteUser({ dispatch }, email) {
+    const res = await deleteUser(email);
+    return res;
+  },
+  async createSuperUser({ dispatch }, pwd) {
+    const res = await addSuperUser(pwd);
+    return res;
   },
   async getAllRoles({ dispatch }) {
-    const data = await getAllRoles()
-    return data
+    const data = await getAllRoles();
+    return data;
   },
-  async addRole({ dispatch },form) {
-    const res = await addRole(form)
-    return res
+  async addRole({ dispatch }, form) {
+    const res = await addRole(form);
+    return res;
   },
-  async getRole({ dispatch },name) {
-    const res = await getRole(name)
-    return res
+  async getRole({ dispatch }, name) {
+    const res = await getRole(name);
+    return res;
   },
-  async editRole({ dispatch },data) {
-    const res = await editRole(data)
-    return res
+  async editRole({ dispatch }, data) {
+    const res = await editRole(data);
+    return res;
   },
-  async delRole({ dispatch },name) {
-    const res = await delRole(name)
-    return res
+  async delRole({ dispatch }, name) {
+    const res = await delRole(name);
+    return res;
   },
-  async editPwd({ dispatch },data) {
-    const res = await editPwd(data)
-    return res
+  async editPwd({ dispatch }, data) {
+    const res = await editPwd(data);
+    return res;
   },
   resetAccessToken({ commit }) {
     commit('setPermissions', []);
@@ -125,5 +140,4 @@ const actions = {
     removeAccessToken();
   },
 };
-export default { state, actions,getters,mutations};
-
+export default { state, actions, getters, mutations };

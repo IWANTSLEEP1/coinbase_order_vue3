@@ -63,7 +63,6 @@
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
 
-
   export default {
     name: 'TabBar',
     setup() {
@@ -82,7 +81,7 @@
           },
           {
             command: 'closeOtherstabs',
-            text:'关闭其它',
+            text: '关闭其它',
             icon: 'icon-close',
           },
           {
@@ -97,7 +96,7 @@
           },
           {
             command: 'closeAlltabs',
-            text:'关闭所有',
+            text: '关闭所有',
             icon: 'icon-minus',
           },
         ],

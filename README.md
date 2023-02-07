@@ -40,4 +40,3 @@ npm run build
 本地开发推荐使用Chrome 80+ 浏览器
 支持现代浏览器, 不支持 IE
 ```
-

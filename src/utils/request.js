@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { netConfig } from '@/config/net.config';
-const { baseURL, contentType, invalidCode,notFound, noPermissionCode, requestTimeout } =
-  netConfig;
+const { baseURL, contentType, invalidCode, notFound, noPermissionCode, requestTimeout } = netConfig;
 import store from '@/store/index.js';
 import router from '@/router/index.js';
 import { ElMessage } from 'element-plus';
@@ -32,20 +31,18 @@ const handleCode = (code, msg) => {
       break;
   }
 };
+
 const instance = axios.create({
   baseURL,
   timeout: requestTimeout,
   headers: {
     'Content-Type': contentType,
-    "Authorization":"Bearer "+localStorage.token
   },
 });
-
 instance.interceptors.request.use(
   (config) => {
-    if (store.getters['user/accessToken']) {
-      config.headers[tokenName] = "Bearer "+localStorage.token;
-    }
+    config.headers[tokenName] = 'Bearer ' + localStorage.getItem('token');
+
     if (
       config.data &&
       config.headers['Content-Type'] === 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -61,9 +58,9 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     const res = response.data;
-    const { status,data } = response;
+    const { status, data } = response;
     // 操作成功
-    if (response.status==200) {
+    if (response.status == 200) {
       return res;
     } else {
       handleCode(status, data);
@@ -86,7 +83,7 @@ instance.interceptors.response.use(
       }
       if (message.includes('Request failed with status code')) {
         const code = message.substr(message.length - 3);
-        if (code == 401){
+        if (code == 401) {
           router.push({ path: '/login' }).catch(() => {});
         }
         message = '登录失效，请重新登录！！！';

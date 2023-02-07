@@ -2,13 +2,13 @@ import request from '@/utils/request.js';
 import { setting } from '@/config/setting';
 const { tokenName } = setting;
 export const login = async (data) => {
-  const fd = new FormData()
-  fd.append('username', data['form']['name'])
-  fd.append('password', data["form"]["password"])
+  const fd = new FormData();
+  fd.append('username', data['form']['name']);
+  fd.append('password', data['form']['password']);
   return request({
-    url: 'auth/login?captcha=' + data["captcha"] + '&code_id=' + data["code_id"],
+    url: 'auth/login?captcha=' + data['captcha'] + '&code_id=' + data['code_id'],
     method: 'post',
-    data: fd
+    data: fd,
   });
 };
 
@@ -21,7 +21,6 @@ export const getUserInfo = (accessToken) => {
     },
   });
 };
-
 
 export const captcha = async () => {
   return request({
@@ -36,7 +35,6 @@ export const signIn = async () => {
     method: 'get',
   });
 };
-
 
 // 获取全部用户信息
 export const getAllUsers = () => {
@@ -59,7 +57,7 @@ export const addUser = async (data) => {
   return request({
     url: '/admin/add',
     method: 'post',
-    data
+    data,
   });
 };
 
@@ -72,67 +70,67 @@ export const addSuperUser = async (pwd) => {
 };
 
 // 获取单一用户
-export const getUser = async(email) => {
+export const getUser = async (email) => {
   return request({
-    url: '/admin/'+email,
+    url: '/admin/' + email,
     method: 'get',
   });
 };
 // 修改用户
-export const editUser = async(data) => {
+export const editUser = async (data) => {
   return request({
-    url: '/admin/'+data['email'],
+    url: '/admin/' + data['email'],
     method: 'post',
-    data
+    data,
   });
 };
 //删除用户
-export const deleteUser = async(email) => {
+export const deleteUser = async (email) => {
   return request({
-    url: '/admin/'+email,
+    url: '/admin/' + email,
     method: 'delete',
   });
 };
 //添加角色
-export const addRole = async(data) => {
+export const addRole = async (data) => {
   return request({
     url: '/admin/role',
     method: 'post',
-    data
+    data,
   });
 };
 //获取单个角色
-export const getRole = async(name) => {
+export const getRole = async (name) => {
   return request({
-    url: '/admin/role/'+name,
+    url: '/admin/role/' + name,
     method: 'get',
   });
 };
 //修改单个角色
-export const editRole = async(data) => {
+export const editRole = async (data) => {
   return request({
-    url: '/admin/role/'+data['name'],
+    url: '/admin/role/' + data['name'],
     method: 'post',
-    data
+    data,
   });
 };
 //删除单个角色
-export const delRole = async(name) => {
+export const delRole = async (name) => {
   return request({
-    url: '/admin/role/'+name,
+    url: '/admin/role/' + name,
     method: 'delete',
   });
 };
 
 //修改密码
-export const editPwd = async(data) => {
+export const editPwd = async (data) => {
   return request({
-    url: '/admin/user/'+data['name'],
+    url: '/admin/user/' + data['name'],
     method: 'post',
-    data:{
-      "old":data['old'],
-      "new":data['new'],
-      "confirm":data['confirm']
-    }
+    data: {
+      old: data['old'],
+      new: data['new'],
+      confirm: data['confirm'],
+    },
   });
 };

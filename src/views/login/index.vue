@@ -1,14 +1,11 @@
 <template>
   <div class="login-wrapper">
-    <el-header class="header">
-      <Logo class="logo" />
-    </el-header>
+    <el-header class="header"> </el-header>
     <div class="login-container">
       <div class="login-left hidden-sm-and-down">
         <div class="login-left-wrap">
           <img class="img" src="@/assets/login.png" alt="login-bg" />
-          <h2 class="desc">orderapi admin订单管理系统</h2>
-          <p class="tip">点击登录订单管理系统</p>
+          <h2 class="desc">订单管理系统</h2>
         </div>
       </div>
       <div class="login-form" :class="{ 'is-mobile': isMobile }">
@@ -86,7 +83,7 @@
           margin: auto;
           .img {
             width: 280px;
-            margin-top: 10vh;
+            margin-top: 20vh;
           }
           .title,
           .desc {

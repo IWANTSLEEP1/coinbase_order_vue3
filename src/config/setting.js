@@ -51,7 +51,7 @@ export const setting = {
   //token存储位置localStorage sessionStorage
   storage: 'localStorage',
   // 标题
-  title: 'order-apr admin',
+  title: 'order-api admin',
   // 版权信息
   copyright: '© orderapi-admin-2023 vue3',
   // 是否显示页面底部自定义版权信息
