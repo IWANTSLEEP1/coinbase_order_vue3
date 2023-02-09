@@ -25,7 +25,7 @@
   <el-dialog
     v-model="dialogFormVisible"
     :title="isAdd ? 'Add User' : 'Edit User'"
-    width="35%"
+    width="32%"
     center
     @close="dialogClose"
   >
@@ -115,7 +115,7 @@
             { required: true, message: '请输入邮箱', trigger: 'blur' },
             {
               pattern:
-                /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
               message: '邮箱格式不正确',
               trigger: 'blur',
             },

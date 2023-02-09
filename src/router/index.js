@@ -50,7 +50,24 @@ export const asyncRoutes = [
       },
     ],
   },
-
+  {
+    path: '/orderPage',
+    name: 'orderPage',
+    component: Layout,
+    children: [
+      {
+        path: '/order',
+        name: 'Order',
+        component: () => import('@/views/orders/orders.vue'),
+        meta: {
+          title: '订单数据',
+          icon: 'icon-order',
+          affix: true,
+          noKeepAlive: true,
+        },
+      },
+    ],
+  },
   {
     path: '/userPage',
     name: 'UserPage',

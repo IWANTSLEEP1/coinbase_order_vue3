@@ -8,8 +8,8 @@
   },
   "scripts": {
     "lint": "eslint \"src/**/*.{js,vue}\"",
-    "serve": "npm run lint && cross-env NODE_ENV=development vite",
-    "build": "npm run lint && cross-env NODE_ENV=production vite build",
+    "serve": "cross-env NODE_ENV=development vite",
+    "build": "cross-env NODE_ENV=production vite build",
     "preview": "cross-env vite preview",
     "build:preview": "vite build --mode production && vite preview",
     "dev:mock": "cross-env USE_MOCK=true vite",

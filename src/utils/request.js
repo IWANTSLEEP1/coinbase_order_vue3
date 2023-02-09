@@ -27,7 +27,7 @@ const handleCode = (code, msg) => {
       router.push({ path: '/404' }).catch(() => {});
       break;
     default:
-      ElMessage.error(msg.detail || `后端接口${code}异常`);
+      ElMessage.error(msg.detail || msg.error.message || `后端接口${code}异常`);
       break;
   }
 };

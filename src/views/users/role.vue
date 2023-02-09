@@ -16,7 +16,7 @@
   <el-dialog
     v-model="dialogFormVisible"
     :title="isAdd ? 'Add Role' : 'Edit Role'"
-    width="35%"
+    width="32%"
     @close="dialogClose"
     center
   >
@@ -25,7 +25,7 @@
         <el-input
           v-model.trim="ruleForm.name"
           autocomplete="off"
-          :placeholder="请输入角色"
+          placeholder="请输入角色"
           :disabled="isAdd ? false : true"
         />
       </el-form-item>
@@ -33,7 +33,7 @@
         <el-input
           v-model.trim="ruleForm.description"
           autocomplete="off"
-          :placeholder="请输入角色描述"
+          placeholder="请输入角色描述"
         />
       </el-form-item>
     </el-form>

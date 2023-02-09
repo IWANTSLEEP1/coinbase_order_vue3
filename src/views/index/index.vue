@@ -12,29 +12,27 @@
     <div class="content">
       <el-row :gutter="10">
         <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
+          <el-card class="card" shadow="hover">
+            <Echarts
+              title="订单金额月统计图"
+              :index="1"
+              headerIcon="icon-chart-line"
+              :style="{
+                height: '350px',
+              }"
+              :options="orderMonthOptions"
+            />
+          </el-card>
+
           <Echarts
-            title="订单金额月统计图"
-            :index="1"
+            title="订单状态月统计图"
+            :index="3"
             headerIcon="icon-chart-line"
             :style="{
-              height: '250px',
+              height: '350px',
             }"
-            :options="orderMonthOptions"
+            :options="orderStatusOptions"
           />
-          <el-card class="card" shadow="hover">
-            <template #header>
-              <h3 class="title">{{ orderMonthOptions }}</h3>
-              <el-button @click="orderMonthOptions.series[1].data = [1, 2, 4, 89]">123</el-button>
-            </template>
-            <el-descriptions class="margin-top" :column="3" border>
-              <el-descriptions-item v-for="(value, key) in packpage.dependencies" :key="key">
-                <template #label>
-                  {{ key }}
-                </template>
-                {{ value }}
-              </el-descriptions-item>
-            </el-descriptions>
-          </el-card>
         </el-col>
         <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
           <el-card class="card" shadow="hover">
@@ -54,6 +52,17 @@
               </div>
             </div>
           </el-card>
+          <el-card class="card" shadow="hover">
+            <Echarts
+              title="订单金额周统计图"
+              :index="2"
+              headerIcon="icon-chart-line"
+              :style="{
+                height: '300px',
+              }"
+              :options="orderWeekOptions"
+            />
+          </el-card>
         </el-col>
       </el-row>
     </div>
@@ -69,7 +78,6 @@
 <script setup>
   import { ref, computed, reactive, onMounted } from 'vue';
   import { CountTo } from 'vue3-count-to';
-  import packpage from '../../../package.json';
   import Echarts from '@/components/Echarts/index.vue';
   import { useStore } from 'vuex';
   const store = useStore();
@@ -80,7 +88,7 @@
       trigger: 'axis',
       axisPointer: { type: 'cross' },
     },
-    legend: {},
+    legend: { top: -0 },
     xAxis: [
       {
         type: 'category',
@@ -95,6 +103,8 @@
         type: 'value',
         name: '每日订单数',
         position: 'right',
+        min:0,
+        max:50,
         axisLabel: {
           formatter: '{value}',
         },
@@ -102,6 +112,61 @@
       {
         type: 'value',
         name: '每日订单总额',
+        position: 'left',
+        min:0,
+        max:1000,
+        axisLabel: {
+          formatter: '{value}',
+        },
+      },
+    ],
+    series: [
+      {
+        name: '每日订单数',
+        type: 'bar',
+        yAxisIndex: 0,
+        data: [],
+      },
+      {
+        name: '每日订单总额',
+        type: 'line',
+        smooth: true,
+        yAxisIndex: 1,
+        data: [],
+      },
+    ],
+  });
+  const orderWeekOptions = reactive({
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'cross' },
+    },
+    legend: { top: -6 },
+    xAxis: [
+      {
+        type: 'category',
+        axisTick: {
+          alignWithLabel: true,
+        },
+        data: [],
+      },
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        name: '每日订单数',
+        position: 'right',
+        min:0,
+        max:100,
+        axisLabel: {
+          formatter: '{value}',
+        },
+      },
+      {
+        type: 'value',
+        name: '每日订单总额',
+        min:0,
+        max:1000,
         position: 'left',
         axisLabel: {
           formatter: '{value}',
@@ -118,14 +183,43 @@
       {
         name: '每日订单总额',
         type: 'line',
-        // smooth: true,
+        smooth: true,
         yAxisIndex: 1,
         data: [],
       },
     ],
   });
+  const orderStatusOptions = reactive({
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        // Use axis to trigger tooltip
+        type: 'shadow', // 'shadow' as default; can also be 'line' or 'shadow'
+      },
+    },
+    legend: {},
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true,
+    },
+    yAxis: {
+      type: 'value',
+      min:0,
+      max:100,
+    },
+    xAxis: {
+      type: 'category',
+      axisTick: {
+        alignWithLabel: true,
+      },
+      data: [],
+    },
+    series: [],
+  });
   const state = reactive({
-    orderList: []
+    orderList: [],
   });
   const hour = new Date().getHours();
   const thisTime =
@@ -144,21 +238,55 @@
   const isMobile = computed(() => {
     return store.getters['setting/isMobile'];
   });
-  const onGetOrderPanelData = () => {
+  const onGetOrderPanelData = async () => {
     store.dispatch('index/getOrderPanelData').then((res) => {
-      state.orderList = res;
+      state.orderList = res.data;
     });
   };
-  const onGetOrderMonth = () => {
+  const onGetOrderMonth = async () => {
     store.dispatch('index/getOrderAmountMonthlyData').then((res) => {
-      orderMonthOptions.xAxis[0].data = res[0];
-      orderMonthOptions.series[0].data = res[1];
-      orderMonthOptions.series[1].data = res[2];
+      orderMonthOptions.xAxis[0].data = res.data[0];
+      orderMonthOptions.series[0].data = res.data[1];
+      orderMonthOptions.series[1].data = res.data[2];
+    });
+  };
+  const onGetOrderWeek = async () => {
+    store.dispatch('index/getOrderAmountWeekData').then((res) => {
+      orderWeekOptions.xAxis[0].data = res.data[0];
+      orderWeekOptions.series[0].data = res.data[1];
+      orderWeekOptions.series[1].data = res.data[2];
+    });
+  };
+  const onGetOrderStatus = async () => {
+    store.dispatch('index/getOrderStatusMonthData').then((res) => {
+      orderStatusOptions.xAxis.data = res.data.date;
+      delete res.data.date
+      const keys = Object.keys(res.data);
+      keys.forEach((key) => {
+        const vaule = {
+          name: '',
+          type: 'bar',
+          stack: 'total',
+          label: {
+            show: false,
+          },
+          emphasis: {
+            focus: 'series',
+          },
+          data: [],
+        };
+        vaule.name=key
+        vaule.data=res.data[key]
+        orderStatusOptions.series.push(vaule)
+        console.log(orderStatusOptions,12321)
+      });
     });
   };
   onMounted(async () => {
-    onGetOrderPanelData();
-    onGetOrderMonth();
+    await onGetOrderPanelData();
+    await onGetOrderMonth();
+    await onGetOrderWeek();
+    await onGetOrderStatus();
   });
 </script>
 
